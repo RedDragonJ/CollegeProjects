@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+inline float cylvol (float a, float b)
+{
+	return (a*a)*(3.1415926*b);
+}
+
+int main ( )
+{
+	float radius, length;
+	float volume;
+
+	cout << endl;	
+	cout << " Enter your radius: ";
+	cin >> radius;
+	cout << endl;
+	cout << " Enter your length: ";
+	cin >> length;
+	cout << endl;
+	
+	volume = cylvol (radius, length);
+	cout << endl;
+	cout << " Your volume of cylinder is: " << volume << endl;
+	cout << endl;
+
+	return 0;
+}

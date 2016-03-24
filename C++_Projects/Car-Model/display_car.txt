@@ -1,0 +1,84 @@
+#include <iostream>
+
+using namespace std;
+
+int main ( )
+{
+
+	int y, w;
+
+	cout << endl;
+	cout << " Enter the year of your car: ";
+	cin >> y;
+	cout << endl;
+	cout << " Enter the weight of your car: ";
+	cin >> w;
+
+	if ( y <= 1990 )
+	{
+		if ( w < 2700 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 1. " << endl;
+			cout << " Your registration fee is 26.5 dollars. " << endl;
+			cout << endl;
+		}
+		else if ( 2700 <= w && 3800 >= w )
+		{
+			cout << endl;
+			cout << " Your car weight class is 2. " << endl;
+			cout << " Your registration fee is 35.5 dollars. " << endl;
+			cout << endl;
+		}
+		else if ( w > 3800 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 3. " << endl;
+			cout << " Your registration fee is 56.5 dollars. " << endl;
+			cout << endl;
+		}
+	}
+	else if ( 1991 <= y && 1999 >= y )
+	{
+		if ( w < 2700 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 4. " << endl;
+			cout << " Your registration fee is 35 dollars. " << endl;
+			cout << endl;
+		}
+		else if ( 2700 <= w && 3800 >= w )
+		{
+			cout << endl;
+			cout << " Your car weight class is 5. " << endl;
+			cout << " Your registration fee is 45.5 dollars. " << endl;
+			cout << endl;
+		}
+		else if ( w > 3800 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 6. " << endl;
+			cout << " Your registration fee is 62.5 dollars. " << endl;
+			cout << endl;
+		}
+	}
+	else if ( y >= 2000 )
+	{
+		if ( w < 3500 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 7. " << endl;
+			cout << " Your registration fee is 49.5 dollars. " << endl;
+			cout << endl;
+		}
+		else if ( w > 3500 )
+		{
+			cout << endl;
+			cout << " Your car weight class is 8. " << endl;
+			cout << " Your registration fee is 62.5 dollars. " << endl;
+			cout << endl;
+		}
+	}
+
+	return 0;
+}

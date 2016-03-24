@@ -1,0 +1,88 @@
+Script started on Sun 02 Feb 2014 03:45:14 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Sun Feb  2 15:45:21 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat calculate.cpp
+#include <iostream>
+
+using namespace std;
+
+float extend (float a, float b)
+{
+	return (a * b);
+}
+
+int main (void)
+{
+	int i;
+	float amount;
+	
+	float price[10] = {10.62, 14.89, 13.21, 16.55, 18.62, 9.47, 6.58, 18.32, 12.15, 3.98};
+	float quantity[10] = {4.0, 8.5, 6.0, 7.35, 9.0, 15.3, 3.0, 5.4, 2.9, 4.8};
+
+	cout << endl;
+	cout << " Calculate the total amount! " << endl;	
+	cout << endl;	
+
+	for(i=0; i < 10; ++i)
+	{
+		cout << " Your price is $" << price[i] << endl;
+		cout << " Your quantity is " << quantity[i] << endl;
+		amount = extend(price[i], quantity[i]);
+		cout << " Your total amount is $" << amount << endl;
+		cout << endl;
+	}
+	
+
+	return 0;
+}
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ calculate.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Calculate the total amount! 
+
+ Your price is $10.62
+ Your quantity is 4
+ Your total amount is $42.48
+
+ Your price is $14.89
+ Your quantity is 8.5
+ Your total amount is $126.565
+
+ Your price is $13.21
+ Your quantity is 6
+ Your total amount is $79.26
+
+ Your price is $16.55
+ Your quantity is 7.35
+ Your total amount is $121.642
+
+ Your price is $18.62
+ Your quantity is 9
+ Your total amount is $167.58
+
+ Your price is $9.47
+ Your quantity is 15.3
+ Your total amount is $144.891
+
+ Your price is $6.58
+ Your quantity is 3
+ Your total amount is $19.74
+
+ Your price is $18.32
+ Your quantity is 5.4
+ Your total amount is $98.928
+
+ Your price is $12.15
+ Your quantity is 2.9
+ Your total amount is $35.235
+
+ Your price is $3.98
+ Your quantity is 4.8
+ Your total amount is $19.104
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exit
+exit
+
+Script done on Sun 02 Feb 2014 03:45:53 PM EST

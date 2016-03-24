@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+int main ( )
+{
+
+	int num1;
+
+	do
+	{
+
+		cout << endl;
+		cout << " Enter a grade: ";
+		cin >> num1;
+		cout << endl;
+
+		if (num1 >= 0 && num1 <= 100)
+ 		{
+			cout << " The grade is " << num1 << endl;
+		}
+
+		else
+		{
+			cout << " The value you entered is invalid! " << endl;
+		}
+
+	} while (num1 != 999);
+
+	return 0;
+}
+

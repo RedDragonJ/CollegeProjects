@@ -1,0 +1,1 @@
+void StoryMode(int id);

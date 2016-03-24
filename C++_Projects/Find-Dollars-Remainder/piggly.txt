@@ -1,0 +1,242 @@
+Script started on Sat 08 Feb 2014 01:35:49 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Sat Feb  8 13:35:57 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat piggly.cpp
+#include <iostream>
+
+using namespace std;
+
+int main ( )
+{
+	float money[10] = {100.00, 50.00, 20.00, 10.00, 5.00, 1.00, 0.25, 0.10, 0.05, 0.01};
+	int total, cash, num, onehundred, fifty, twenty, ten, five, one, quarter, dime, nickle, penny;
+	float amount;
+	char choice;
+
+	cout << endl;
+	cout << "      Piggly Wiggly! " << endl; 
+	cout << "------------------------------------" << endl;
+
+        do
+	{
+		cout << " Do you like to enter money amount or quit(E/Q): ";
+		cin >> choice;
+		cout << endl;
+
+		if (choice == 'e' || choice == 'E')
+		{
+			cout << " Enter the amount of money($): ";
+			cin >> amount;
+			cout << endl;
+			total = amount * 100;
+
+			cash = money[0] * 100;
+			num = total / cash;
+			onehundred = total % cash;
+			cout << "One hundred dollar bill: " << num << endl;
+
+			cash = money[1] * 100;
+			num = onehundred / cash;
+			fifty = onehundred % cash;
+			cout << "Fifty dollar bill: " << num << endl;
+	
+			cash = money[2] * 100;
+			num = fifty / cash;
+			twenty = fifty % cash;
+			cout << "Twenty dollar bill: " << num << endl;
+
+			cash = money[3] * 100;
+			num = twenty / cash;
+			ten = twenty % cash;
+			cout << "Ten dollar bill: " << num << endl;
+
+			cash = money[4] * 100;
+			num = ten / cash;
+			five = ten % cash;
+			cout << "Five dollar bill: " << num << endl;
+
+			cash = money[5] * 100;
+			num = five / cash;
+			one = five % cash;
+			cout << "One dollar bill: " << num << endl;
+
+			cash = money[6] * 100;
+			num = one / cash;
+			quarter = one % cash;
+			cout << "Quarter: " << num << endl;
+
+			cash = money[7] * 100;
+			num = quarter / cash;
+			dime = quarter % cash;
+			cout << "Dime: " << num << endl;
+
+			cash = money[8] * 100;
+			num = dime / cash;
+			nickle = dime % cash;
+			cout << "Nickle: " << num << endl;
+
+			cash = money[9] * 100;
+			num = nickle / cash;
+			penny = nickle % cash;
+			cout << "Penny: " << num << endl; 
+			
+			cout << endl;
+		}
+		else
+		{
+			break;
+		}
+
+	} while(choice != 'q' || choice != 'Q');
+	
+
+	return 0;
+}
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ piggly.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+      Piggly Wiggly! 
+------------------------------------
+ Do you like to enter money amount or quit(E/Q): e
+
+ Enter the amount of money($): 100.00
+
+One hundred dollar bill: 1
+Fifty dollar bill: 0
+Twenty dollar bill: 0
+Ten dollar bill: 0
+Five dollar bill: 0
+One dollar bill: 0
+Quarter: 0
+Dime: 0
+Nickle: 0
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): e
+
+ Enter the amount of money($): 99.99
+
+One hundred dollar bill: 0
+Fifty dollar bill: 1
+Twenty dollar bill: 2
+Ten dollar bill: 0
+Five dollar bill: 1
+One dollar bill: 4
+Quarter: 3
+Dime: 2
+Nickle: 0
+Penny: 4
+
+ Do you like to enter money amount or quit(E/Q): E
+
+ Enter the amount of money($): 99.95
+
+One hundred dollar bill: 0
+Fifty dollar bill: 1
+Twenty dollar bill: 2
+Ten dollar bill: 0
+Five dollar bill: 1
+One dollar bill: 4
+Quarter: 3
+Dime: 2
+Nickle: 0
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): E
+
+ Enter the amount of money($): 99.94
+
+One hundred dollar bill: 0
+Fifty dollar bill: 1
+Twenty dollar bill: 2
+Ten dollar bill: 0
+Five dollar bill: 1
+One dollar bill: 4
+Quarter: 3
+Dime: 1
+Nickle: 1
+Penny: 4
+
+ Do you like to enter money amount or quit(E/Q): e
+
+ Enter the amount of money($): 99.90
+
+One hundred dollar bill: 0
+Fifty dollar bill: 1
+Twenty dollar bill: 2
+Ten dollar bill: 0
+Five dollar bill: 1
+One dollar bill: 4
+Quarter: 3
+Dime: 1
+Nickle: 1
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): e
+
+ Enter the amount of money($): 0
+
+One hundred dollar bill: 0
+Fifty dollar bill: 0
+Twenty dollar bill: 0
+Ten dollar bill: 0
+Five dollar bill: 0
+One dollar bill: 0
+Quarter: 0
+Dime: 0
+Nickle: 0
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): E
+
+ Enter the amount of money($): 0.05
+
+One hundred dollar bill: 0
+Fifty dollar bill: 0
+Twenty dollar bill: 0
+Ten dollar bill: 0
+Five dollar bill: 0
+One dollar bill: 0
+Quarter: 0
+Dime: 0
+Nickle: 1
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): E
+
+ Enter the amount of money($): 75.0
+
+One hundred dollar bill: 0
+Fifty dollar bill: 1
+Twenty dollar bill: 1
+Ten dollar bill: 0
+Five dollar bill: 1
+One dollar bill: 0
+Quarter: 0
+Dime: 0
+Nickle: 0
+Penny: 0
+
+ Do you like to enter money amount or quit(E/Q): e
+
+ Enter the amount of money($): 0.01
+
+One hundred dollar bill: 0
+Fifty dollar bill: 0
+Twenty dollar bill: 0
+Ten dollar bill: 0
+Five dollar bill: 0
+One dollar bill: 0
+Quarter: 0
+Dime: 0
+Nickle: 0
+Penny: 1
+
+ Do you like to enter money amount or quit(E/Q): q
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exo[Kit
+exit
+
+Script done on Sat 08 Feb 2014 01:38:11 PM EST

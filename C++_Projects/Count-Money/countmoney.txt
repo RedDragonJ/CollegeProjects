@@ -1,0 +1,108 @@
+Script started on Sat 18 Jan 2014 11:54:09 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Sat Jan 18 23:54:18 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat countmoney.cpp
+#include <iostream>
+
+using namespace std;
+
+float totemt (float a, float b, float c, float d)
+{
+	return ((0.25*a)+(0.10*b)+(0.05*c)+(0.01*d));
+}
+
+int main ( )
+{
+	int  quarters, dimes, nickles, pennies;
+	float value;	
+
+	cout << endl;
+	cout << " Enter the number of quarters: ";
+	cin >> quarters;
+	cout << endl;
+
+	cout << " Enter the number of dimes: ";
+	cin >> dimes;
+	cout << endl;
+
+	cout << " Enter the number of nickles: ";
+	cin >> nickles;
+	cout << endl;
+
+	cout << " Enter the number of pennies: ";
+	cin >> pennies;
+	cout << endl;
+	
+	value = totemt (quarters, dimes, nickles, pennies);
+	cout << " The total amount in your piggybank is " << value << endl;
+	cout << endl;	
+
+	return 0;
+}
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ countmoney.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Enter the number of quarters: 8
+
+ Enter the number of dimes: 2
+
+ Enter the number of nickles: 3
+
+ Enter the number of pennies: 10
+
+ The total amount in your piggybank is 2.45
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Enter the number of quarters: 3
+
+ Enter the number of dimes: 10
+
+ Enter the number of nickles: 8
+
+ Enter the number of pennies: 7
+
+ The total amount in your piggybank is 2.22
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Enter the number of quarters: 4
+
+ Enter the number of dimes: 5
+
+ Enter the number of nickles: 6
+
+ Enter the number of pennies: 2
+
+ The total amount in your piggybank is 1.82
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Enter the number of quarters: 2
+
+ Enter the number of dimes: 4
+
+ Enter the number of nickles: 9
+
+ Enter the number of pennies: 50
+
+ The total amount in your piggybank is 1.85
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Enter the number of quarters: 30
+
+ Enter the number of dimes: 65
+
+ Enter the number of nickles: 2
+
+ Enter the number of pennies: 100
+
+ The total amount in your piggybank is 15.1
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exit
+exit
+
+Script done on Sat 18 Jan 2014 11:57:33 PM EST

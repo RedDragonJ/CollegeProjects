@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+inline float surfarea (float a, float b)
+{
+	return (2.0*3.1415926)*(a*b);
+}
+
+int main ( )
+{
+	float radius, length, surface;	
+
+	cout << endl;
+	cout << " Enter your radius: ";
+	cin >> radius;
+	cout << endl;
+	cout << " Enter your length: ";
+	cin >> length;
+	cout << endl;
+
+	surface = surfarea (radius, length);
+	cout << endl;
+	cout << " Your cylinder surface area is: " << surface << endl;
+	cout << endl;
+
+	return 0;
+}

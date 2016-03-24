@@ -1,0 +1,349 @@
+Script started on Thu 03 Apr 2014 12:09:29 AM EDT
+]0;has92@acm:~/cs457/linked_list[?1034h[has92@acm linked_list]$ cat list.hea[K[K
+struct rec
+{
+   char * id;
+   char firstname[15];
+   char lastname[15];
+   struct rec* prev;
+   struct rec* next;
+};
+
+
+int AddItem ( rec r );
+int DeleteItem ( char* delid );
+void PrintList ( int order );
+
+
+]0;has92@acm:~/cs457/linked_list[has92@acm linked_list]$ cat main.cpp
+#include <iostream>
+#include "list.h"
+#include <string.h>  // <string>
+
+    using namespace std;
+
+int main (void)
+{
+   int choice, printorder;
+   char idbuffer[100];
+   rec r; 
+   
+
+   do
+   {  
+      cout << endl;
+      cout << "Enter your choice 1 Add, 2 Delete, 3 Print, 0 quit "<<endl;
+      cin >> choice;
+   
+       switch ( choice )
+       {
+          case 1:  //AddItem
+             cout << "\nEnter ID ";
+             cin >> idbuffer;
+               
+             r.id = idbuffer;
+             cout << "\nFirst Name ";
+             cin >> r.firstname;
+             cout << "\nLast Name ";
+             cin >>  r.lastname;
+             if ( AddItem ( r ))
+             {
+                cout << "\nSuccess!\n";
+             }
+             else
+             {
+                cout << "\nItem failed to be added\n";
+             }
+
+             break;
+          case 2:  //Delete
+             cout << "\nEnter id :";
+             cin >> idbuffer;
+             if ( DeleteItem ( idbuffer )) 
+             {
+                cout << "\nDelete OK\n";
+             }
+             else
+             {
+                cout << "\nDelete Failed for " << idbuffer << endl;
+             }
+             break;
+          case 3: // Print
+            cout << "Enter order 0 - Ascending, 1 - Descending\n";
+            cin >> printorder;
+            PrintList (printorder); 
+            break;
+          case 0:  // quit
+             break;
+
+ 
+          default: // bad choice
+             break; 
+       } // end switch
+
+   } 
+   while ( choice != 0 );// end do while
+}  // end main
+]0;has92@acm:~/cs457/linked_list[has92@acm linked_list]$ cat list.cpp
+# include <iostream>
+# include <string.h>
+# include <ctype.h>
+# include "list.h"
+
+using namespace std;
+
+// declare first and last as NULL;
+rec *first = NULL;
+rec *last = NULL;
+
+int AddItem ( rec r )
+{
+	rec *firstnode;
+	rec *newnode;
+	rec *current;
+	rec *begin;
+	rec *idcheck;
+
+	// insert first node if list is empty;
+	if (first == NULL)
+	{
+		// create first NULL;
+		firstnode = new rec;
+		firstnode-> id = new char[strlen(r.id)+1];
+		strcpy (firstnode-> id, r.id);
+		strcpy (firstnode-> firstname, r.firstname);
+		strcpy (firstnode-> lastname, r.lastname);
+
+		firstnode-> prev = NULL;
+		firstnode-> next = NULL;
+		first = firstnode;
+		last = firstnode;
+
+		return 1;
+	}
+
+	// insert node if list not empty;
+	else
+	{
+		// create a newnode;
+		newnode = new rec;
+		newnode-> id = new char[strlen(r.id)+1];
+		strcpy (newnode-> id, r.id);
+		strcpy (newnode-> firstname, r.firstname);
+		strcpy (newnode-> lastname, r.lastname);		
+
+		// check for duplicate id in the list;
+		idcheck = first;
+
+		while (idcheck != NULL)
+		{
+			if ((strcmp(idcheck-> id, newnode-> id)) == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				idcheck = idcheck-> next;
+			}
+		}
+		
+		// insert from back
+		if (strcmp(newnode-> lastname, last-> lastname) > 0)
+		{
+			newnode-> prev = last;
+			newnode-> next = NULL;
+			last-> next = newnode;
+			last = newnode;
+
+			return 1;
+		}
+		// insert from front
+		else if (strcmp(first-> lastname, newnode-> lastname) > 0)
+		{
+			newnode-> next = first;
+			newnode-> prev = NULL;
+			first-> prev = newnode;
+			first = newnode;
+
+			return 1;
+		}
+		// insert from middle
+		else
+		{
+			current = first;
+
+			while (current-> next != NULL)
+			{
+				if (((strcmp(newnode-> lastname, current-> lastname)) > 0) && ((strcmp(current-> next-> lastname, newnode-> lastname)) > 0))
+				{
+			                newnode-> prev = current;
+					newnode-> next = current-> next;
+					current-> next-> prev = newnode;
+					current-> next = newnode;
+							
+					return 1;
+				}
+				else if ((strcmp(newnode-> lastname, current-> lastname)) == 0)
+				{
+					newnode-> prev = current;
+					newnode-> next = current-> next;
+					current-> next-> prev = newnode;
+					current-> next = newnode;
+
+					return 1;
+				}
+				else
+				{
+					current = current-> next;
+				}
+			}
+		}
+	}
+}
+
+int DeleteItem ( char *delid )
+{
+	char *ID;	
+	rec *begin, *end, *middle, *onlynode;
+
+	ID = delid;
+
+	// check if list is NULL;
+	if (first == NULL)
+	{
+		return 0;
+	}
+
+	// check if only one node in list;
+	else if (first-> next == NULL)
+	{
+		// delete only node in list
+		if ((strcmp(first-> id, ID)) == 0)
+		{
+			onlynode = last;
+			last = onlynode-> prev;
+			first = NULL;
+			delete[]onlynode-> id;
+			delete onlynode;
+			
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{	 
+
+		// delete first node;
+		if ((strcmp(first-> id, ID)) == 0)
+		{
+			begin = first;
+			first = first-> next;
+			first-> prev = NULL;
+			begin-> next = NULL;
+			delete[]begin-> id;
+			delete begin;
+
+			return 1;
+		}
+
+		// delete last node;
+		else if ((strcmp(last-> id, ID)) == 0)
+		{
+			end = last;
+			last = last-> prev;
+			last-> next = NULL;
+			end-> prev = NULL;
+			delete[]end-> id;
+			delete end;
+			
+			return 1;
+		}
+
+		// delete from middle
+		else
+		{
+			middle = first;
+
+			while (middle-> next != NULL)
+			{
+				if ((strcmp(middle-> id, ID)) == 0)
+				{
+					middle-> prev-> next = middle-> next;
+					middle-> next-> prev = middle-> prev;
+					middle-> prev = NULL;
+					middle-> next = NULL;
+					delete[]middle-> id;
+					delete middle;
+
+					return 1;
+				}
+				else
+				{
+					middle = middle-> next;
+				}
+			}
+		}
+	}
+}
+
+void PrintList ( int order )
+{
+	rec *ptr;
+
+	// print as descending;
+	if (order == 1)
+	{
+		ptr = last;
+
+		// print is empty list;
+		if (ptr == NULL)
+		{
+			cout << " Empty list! " << endl;
+		}
+
+		// print is not empty list;
+		while (ptr != NULL)
+		{
+			cout << ptr->id << " ";
+			cout << ptr->firstname << " ";
+			cout << ptr->lastname << " ";
+			cout << ptr->prev << " ";
+			cout << ptr << " ";
+			cout << ptr->next << " ";
+			cout << endl;
+			ptr = ptr-> prev;
+		}		
+	}
+
+	// print as ascending;
+	else if (order == 0)
+	{
+		ptr = first;		
+	
+		// print if empty list;
+		if (ptr == NULL)
+		{
+			cout << " Empty list! " << endl;
+		}
+
+		// print if not empty list;
+		while (ptr != NULL)
+		{
+			cout << ptr->id << " ";
+			cout << ptr->firstname << " ";
+			cout << ptr->lastname << " ";
+			cout << ptr->prev << " ";
+			cout << ptr << " ";
+			cout << ptr->next << " ";
+			cout << endl;
+			ptr = ptr-> next;
+		}
+	}
+}
+]0;has92@acm:~/cs457/linked_list[has92@acm linked_list]$ exit
+exit
+
+Script done on Thu 03 Apr 2014 12:09:59 AM EDT

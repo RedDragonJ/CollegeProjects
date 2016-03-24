@@ -1,0 +1,1 @@
+void readFiles (string& myName);

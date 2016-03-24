@@ -1,0 +1,181 @@
+Script started on Mon 24 Feb 2014 02:43:30 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Mon Feb 24 14:43:35 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat weekday.co[K[[[K[Kpp
+
+
+# include <iostream>
+
+
+
+using namespace std;
+
+
+
+void display (char *a)
+
+{
+	
+	char *print;
+	
+	print = a;
+	
+	cout << "The day is " << print << endl;
+
+}
+
+
+
+int main ( )
+
+{
+	
+	int num;
+	
+	char day1[] = "Sunday";
+	
+	char day2[] = "Monday";
+	
+	char day3[] = "Tuesday";
+	
+	char day4[] = "Wednesday";
+	
+	char day5[] = "Thursday";
+	
+	char day6[] = "Friday";
+	
+	char day7[] = "Saturday";
+	
+	char *ptr;
+
+	
+	do
+	
+	{
+		
+		cout << endl;
+		
+		cout << "Enter your number/ quit(type 0): ";
+
+		cin >> num;
+		
+		cout << endl;
+	
+		
+		
+		if(num == 1)
+		
+		{
+			
+			ptr = day1;
+			
+			display(ptr);
+		
+		}
+		
+		else if(num == 2)
+		
+		{
+			
+			ptr = day2;
+			
+			display(ptr);
+
+		}
+		
+		else if(num == 3)
+
+		{
+			
+			ptr = day3;
+			
+			display(ptr);
+
+		}
+		
+		else if(num == 4)
+
+		{
+			
+			ptr = day4;
+			
+			display(ptr);
+
+		}
+		
+		else if(num == 5)
+		
+		{
+			
+			ptr = day5;
+
+			display(ptr);
+
+		}
+
+		else if(num == 6)
+
+		{
+
+			ptr = day6;
+
+			display(ptr);
+
+		}
+
+		else if(num == 7)
+
+		{
+
+			ptr = day7;
+
+			display(ptr);
+
+		}
+
+	} while (num != 0);
+
+
+	return 0;
+
+}
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ weekday.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+Enter your number/ quit(type 0): 1
+
+The day is Sunday
+
+Enter your number/ quit(type 0): 2
+
+The day is Monday
+
+Enter your number/ quit(type 0): 3
+
+The day is Tuesday
+
+Enter your number/ quit(type 0): 4
+
+The day is Wednesday
+
+Enter your number/ quit(type 0): 5
+
+The day is Thursday
+
+Enter your number/ quit(type 0): 6
+
+The day is Friday
+
+Enter your number/ quit(type 0): 7
+
+The day is Saturday
+
+Enter your number/ quit(type 0): 0
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exit
+exit
+
+Script done on Mon 24 Feb 2014 02:44:05 PM EST

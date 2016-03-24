@@ -1,0 +1,195 @@
+Script started on Tue 04 Mar 2014 10:47:15 PM EST
+]0;has92@acm:~/cs457/strfunctions[?1034h[has92@acm strfunctions]$ rm -f a.out
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ rm -f a.out[K[K[K[K[K*.o
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ cat m[Kstrmain.cpp
+# include <iostream>
+# include "strfcts.h"
+
+using namespace std;
+
+int main ( )
+{
+	int result;
+	char *myarr[3];
+	myarr[0] = new char[100];
+	myarr[1] = new char[100];
+	myarr[2] = new char[100];
+
+	GetInput(myarr);
+	DisplayStrings(myarr);	
+	Search(myarr);
+	Sort(myarr);
+	DisplayStrings(myarr);	
+	cout << endl;
+	ShowLens(myarr);
+	cout << "--------------" << endl;
+	cout << endl;
+//	cout << "The total number of characters are: ";
+//	result = AlphaChars(myarr);
+//	cout << result << endl;
+
+	return 0;
+}
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ cat tools.h
+cat: tools.h: No such file or directory
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ cat tools.h[1P.h[1P.h[1P.h[1P.h[1P.hs.ht.hr.hf.hc.ht.hs.h
+void GetInput(char *a[]);
+void DisplayStrings(char *b[]);
+void Search(char *c[]);
+void Sort(char *d[]);
+void ShowLens(char *e[]);
+//int AlphaChars(char *f[]);
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ cat strfcts.h[Kcpp
+# include <iostream>
+# include <string.h>
+# include <ctype.h>
+
+using namespace std;
+
+void GetInput (char *a[])
+{
+	cout << endl;
+	cout << "Enter the strings: " << endl;
+	cout << endl;
+	cin.getline(a[0], 100, '\n');
+	cin.getline(a[1], 100, '\n');
+	cin.getline(a[2], 100, '\n');
+}
+
+void DisplayStrings (char *b[])
+{
+	cout << endl;
+	cout << "----------------" << endl;
+	cout << "Display strings: " << endl;
+	cout << endl;
+	cout << b[0] << endl;
+	cout << b[1] << endl;
+	cout << b[2] << endl;
+}
+
+void Search (char *c[])
+{
+	char *ptr;
+
+	if ((ptr = strstr(c[0], "fun")) != NULL)
+	{
+		cout << endl;
+		cout << "----------------" << endl;
+		cout << endl;
+		cout << "String was found!" << endl;
+		cout << c[0] << endl;	
+	}
+	else if ((ptr = strstr(c[1], "fun")) != NULL)
+	{
+		cout << endl;
+		cout << "----------------" << endl;
+		cout << endl;
+		cout << "String was found!" << endl;
+		cout << c[1] << endl;
+	}
+	else if ((ptr = strstr(c[2], "fun")) != NULL)
+	{
+		cout << endl;
+		cout << "----------------" << endl;
+		cout << endl;
+		cout << "String was found!" << endl;
+		cout << c[2] << endl;
+	}
+	else 
+	{
+		cout << endl;
+		cout << "----------------" << endl;
+		cout << endl;
+		cout << "String wasn't found" << endl;
+	}
+}
+
+void Sort (char *d[])
+{
+	int n;
+	char *temp;
+	
+	for (int i=0; i<2; ++i)
+	{
+		n = strcmp(d[i],d[i+1]);
+		
+		if (n > 0)
+		{
+			temp = d[i];
+			d[i] = d[i+1];
+			d[i+1] = temp;
+		}	
+	}
+}
+
+void ShowLens (char *e[])
+{
+	int num1, num2, num3;
+	
+	num1 = strlen(e[0]);
+	num2 = strlen(e[1]);
+	num3 = strlen(e[2]);
+
+	cout << "-----------------" << endl;	
+	cout << endl;
+	cout << "The string #1 length is: " << num1 << endl;
+	cout << "The string #2 length is: " << num2 << endl;
+	cout << "The string #3 length is: " << num3 << endl;
+	cout << endl;
+}
+
+//int AlphaChars (char *f[])
+//{
+//	int i, total=0;
+//	
+//	for (i=0; i<3; ++i)
+//	{
+//		if (isalpha(f[i]))
+//		{
+//			total++;
+//		}
+//	}
+//	return total;
+//}
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ g[K+[Kg++ -c strmain.cpp
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ g++ =[K-c strfcts.cpp
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ g++ strmain.o strfcts.o
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ ./a.out
+
+Enter the strings: 
+
+Pep9 is fun.
+2000 + 7 is 2007.
+A cat will love her funny owner.
+
+----------------
+Display strings: 
+
+Pep9 is fun.
+2000 + 7 is 2007.
+A cat will love her funny owner.
+
+----------------
+
+String was found!
+Pep9 is fun.
+
+----------------
+Display strings: 
+
+2000 + 7 is 2007.
+A cat will love her funny owner.
+Pep9 is fun.
+
+-----------------
+
+The string #1 length is: 17
+The string #2 length is: 32
+The string #3 length is: 12
+
+--------------
+
+]0;has92@acm:~/cs457/strfunctions[has92@acm strfunctions]$ exit
+exit
+
+Script done on Tue 04 Mar 2014 10:51:35 PM EST

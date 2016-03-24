@@ -1,0 +1,10 @@
+This game is about a brave hero save the village from the Evillord. The Evillord
+attempt to destroy the village and you, as a hero, stand up againt the Evillord. Defeat
+the Evillord for the sake of peace!!!!
+
+Instruction:
+	This game allow create new game, continue game, PvP mode. The new game
+	will start a new story and will check if you type in a valid character name.
+	The continue game will ask user for exist character name, then read game
+	data from the file and loads them into the system. The PvP mode will allow
+	two human players to battle with each other on local.

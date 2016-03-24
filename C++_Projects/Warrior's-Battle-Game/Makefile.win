@@ -1,0 +1,51 @@
+# Project: Warrior's Battle
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = main.o AboutGame.o PvP.o Story.o Character.o Monster.o StoryBattle.o BossBattle.o $(RES)
+LINKOBJ  = main.o AboutGame.o PvP.o Story.o Character.o Monster.o StoryBattle.o BossBattle.o $(RES)
+LIBS =  -L"E:/A_Working_Software/Dev-Cpp/lib"  
+INCS =  -I"E:/A_Working_Software/Dev-Cpp/include" 
+CXXINCS =  -I"E:/A_Working_Software/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"E:/A_Working_Software/Dev-Cpp/include/c++/3.4.2/backward"  -I"E:/A_Working_Software/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"E:/A_Working_Software/Dev-Cpp/include/c++/3.4.2"  -I"E:/A_Working_Software/Dev-Cpp/include" 
+BIN  = "Warrior's Battle.exe"
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before "Warrior's Battle.exe" all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "Warrior's Battle.exe" $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+AboutGame.o: AboutGame.cpp
+	$(CPP) -c AboutGame.cpp -o AboutGame.o $(CXXFLAGS)
+
+PvP.o: PvP.cpp
+	$(CPP) -c PvP.cpp -o PvP.o $(CXXFLAGS)
+
+Story.o: Story.cpp
+	$(CPP) -c Story.cpp -o Story.o $(CXXFLAGS)
+
+Character.o: Character.cpp
+	$(CPP) -c Character.cpp -o Character.o $(CXXFLAGS)
+
+Monster.o: Monster.cpp
+	$(CPP) -c Monster.cpp -o Monster.o $(CXXFLAGS)
+
+StoryBattle.o: StoryBattle.cpp
+	$(CPP) -c StoryBattle.cpp -o StoryBattle.o $(CXXFLAGS)
+
+BossBattle.o: BossBattle.cpp
+	$(CPP) -c BossBattle.cpp -o BossBattle.o $(CXXFLAGS)

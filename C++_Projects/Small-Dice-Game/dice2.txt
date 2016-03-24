@@ -1,0 +1,831 @@
+Script started on Wed 15 Jan 2014 11:12:41 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Wed Jan 15 23:12:58 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat dice2.cpp
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+int roll (void)
+{
+	return (rand() % 6) + 1;
+}
+
+int main (void)
+{
+
+	int num, num1, num2;
+	char ops;
+	srand (time(0));
+
+	while (ops != 'q')
+	{
+		cout << endl;
+		cout << " Choose your roll option(r/q) ";
+		cin >> ops;
+		cout << endl;
+
+		switch (ops)
+		{
+			case 'r':
+				num1 = roll();
+				num2 = roll();
+				num = num1 + num2;
+				
+				if (num == 7 || num == 11)
+				{
+					cout << " Your first number is " << num1 << endl;
+					cout << " Your second number is " << num2 << endl;
+					cout << " Your total value is " << num << endl;
+					cout << " You won! " << endl;
+					cout << " -------------------- " << endl;
+				}
+				else if (num == 2 || num == 3 || num == 12)
+				{
+					cout << " Your first number is " << num1 << endl;
+					cout << " Your second number is " << num2 << endl;
+					cout << " Your total value is " << num << endl;
+					cout << " You loses! " << endl;
+					cout << " -------------------- " << endl;
+				}
+				else if (num == 4 || num == 5 || num == 6 || num == 8 || num == 9 || num == 10)
+				{
+					do
+					{
+						cout << endl;
+						cout << " Choose your roll option(r/q) ";
+						cin >> ops;
+						cout << endl;
+						
+						if (ops == 'r')
+						{
+							num1 = roll();
+							num2 = roll();
+							num = num1 + num2;
+							
+							if (num == 4 || num == 5 || num == 6 || num == 8 || num == 9 || num == 10)
+							{
+								cout << " Your first number is " << num1 << endl;
+								cout << " Your second number is " << num2 << endl;
+								cout << " Your total value is " << num << endl;
+								cout << " You won! " << endl;
+								cout << " -------------------- " << endl;
+							}
+							else if (num == 7)
+							{
+								cout << " Your first number is " << num1 << endl;
+								cout << " Your second number is " << num2 << endl;
+								cout << " Your total value is " << num << endl;
+								cout << " You loses! "<< endl;
+								cout << " -------------------- " << endl;
+							}
+						}
+						else if (ops == 'q')
+						{
+							break;
+						}
+					} while(num != 4 || num != 5 || num != 6 || num != 7 || num != 8 || num != 9 || num != 10);
+				}
+				break;
+			case 'q':
+				break;
+		}
+	}
+
+	return 0;
+}
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ dice2.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 4
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 3
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 2
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 1
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 3
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 6
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 3
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 4
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 1
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 3
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 6
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 5
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 4
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 4
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 4
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 4
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 5
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 5
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 3
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 3
+ Your total value is 5
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 5
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 4
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 4
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 6
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 5
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 5
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 1
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 4
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 2
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 5
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 1
+ Your total value is 5
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 2
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 3
+ Your total value is 5
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 2
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) rr
+
+ Your first number is 4
+ Your second number is 3
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) 
+ Your first number is 6
+ Your second number is 3
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 5
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 4
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 1
+ Your total value is 5
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 4
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 3
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 4
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 5
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 2
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 4
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 5
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 4
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 3
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 3
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 4
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 5
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 2
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 1
+ Your second number is 3
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 6
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 3
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 1
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 4
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 4
+ Your second number is 1
+ Your total value is 5
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 3
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 5
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 2
+ Your total value is 4
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 4
+ Your total value is 9
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 4
+ Your total value is 10
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 3
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 4
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 3
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 5
+ Your second number is 1
+ Your total value is 6
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+
+ Choose your roll option(r/q) r
+
+ Your first number is 2
+ Your second number is 5
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 6
+ Your second number is 2
+ Your total value is 8
+ You won! 
+ -------------------- 
+
+ Choose your roll option(r/q) r
+
+ Your first number is 3
+ Your second number is 4
+ Your total value is 7
+ You loses! 
+ -------------------- 
+
+ Choose your roll option(r/q) q
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exit
+exit
+
+Script done on Wed 15 Jan 2014 11:15:42 PM EST

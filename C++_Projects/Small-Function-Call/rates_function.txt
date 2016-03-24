@@ -1,0 +1,54 @@
+Script started on Mon 10 Feb 2014 03:44:42 PM EST
+]0;has92@acm:~/cs457[?1034h[has92@acm cs457]$ whoami
+has92
+]0;has92@acm:~/cs457[has92@acm cs457]$ date
+Mon Feb 10 15:44:50 EST 2014
+]0;has92@acm:~/cs457[has92@acm cs457]$ cat st[K[Krates+_[K[K+[K_function.cpp
+# include <iostream>
+
+using namespace std;
+
+float *show (float *a)
+{
+	float *ptr = a;
+	for (int i=0; i < 9; ++i)
+	{
+		cout << (i+1) << ".  " << *(ptr+i) << endl;
+	}		
+
+}
+
+int main ( )
+{
+	float rates[9] = {6.5, 7.2, 7.5, 8.3, 8.6, 9.4, 9.6, 9.8, 10.0};
+	float *rateptr;
+
+	cout << endl;	
+	cout << "Display the values of rate from function" << endl;
+	cout << endl;
+	cout << "Your values of rate are: " << endl;
+	rateptr = show(rates);
+	cout << endl;
+
+	return 0;
+}
+]0;has92@acm:~/cs457[has92@acm cs457]$ g++ rates_function.cpp
+]0;has92@acm:~/cs457[has92@acm cs457]$ ./a.out
+
+Display the values of rate from function
+
+Your values of rate are: 
+1.  6.5
+2.  7.2
+3.  7.5
+4.  8.3
+5.  8.6
+6.  9.4
+7.  9.6
+8.  9.8
+9.  10
+
+]0;has92@acm:~/cs457[has92@acm cs457]$ exit
+exit
+
+Script done on Mon 10 Feb 2014 03:45:25 PM EST
