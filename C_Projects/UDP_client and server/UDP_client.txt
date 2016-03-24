@@ -1,0 +1,233 @@
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+//system libraries
+
+int main (int argc, char* argv[])
+{
+	int port, i, ret;
+	int inputID;
+	char keybuf[50], valbuf[100], buf[2000], msg[2000];//buffers
+	char *inputkey;
+	char *inputval;
+	char *severIP;
+
+	inputID = atoi(argv[1]);//get ID from command line
+	inputkey = argv[2];//get key from command line
+	inputval = argv[3];//get value from command line
+	strcpy (keybuf, inputkey);//deep copy key to keybuffer
+	strcpy (valbuf, inputval);//deep copy value to valbuffer	
+	severIP = argv[4];//get IP
+	port = atoi(argv[5]);//get port number
+
+	int c_sockt;
+	int len;
+	struct sockaddr_in server;
+
+	c_sockt = socket(AF_INET, SOCK_DGRAM, 0);//create socket
+	if (c_sockt<0)//check socket
+	{
+		perror ("Socket");
+		return 0;
+	}
+	else
+	{
+		printf ("Socket opened!\n");
+	}
+
+	memset(&server, 0, sizeof(server));
+	server.sin_family = AF_INET;//internet mode
+	server.sin_addr.s_addr = inet_addr(severIP);//ip addr
+	server.sin_port = htons(port);//port number
+
+	//delcare select for time out on client and set wait time for 5 seconds
+	fd_set my_fds;
+	struct timeval timeout;
+	timeout.tv_sec = 3;
+	timeout.tv_usec = 3;
+
+	FD_SET(c_sockt, &my_fds);
+	timeout.tv_sec = 3;
+	timeout.tv_usec = 3;
+
+	if (inputID == 1)//ID 1 send ID, key, and value
+	{
+		int strsize;
+		buf[0] = (unsigned char)inputID;
+		sprintf (&buf[1], "%s%c%s", keybuf, '\0', valbuf);
+		strsize = 1+strlen(keybuf)+1+strlen(valbuf)+1;
+
+		for (i=1; i<=3; ++i)//send 3 times if time out
+		{
+			printf ("Sending network request.....\n");
+			printf ("----------------------------\n\n");
+	
+			sendto (c_sockt, buf, strsize, 0, (struct sockaddr *)&server, sizeof(server));
+			ret = select(c_sockt + 1, &my_fds, NULL, NULL, &timeout);
+			if (ret == -1)
+			{
+				perror ("Select");
+				return 0;
+			}
+			else if (ret == 0)
+			{
+				if (i == 3)
+				{
+					printf ("Connection failed!\n");
+					return 0;
+				}
+				else
+				{
+					printf ("Timeout, retry..... \n");
+					sleep (3);
+				}
+			}
+			else
+			{
+				sleep (2);
+				recvfrom (c_sockt, msg, 2000, 0, NULL, NULL);//(struct sockaddr *)&server, &len);
+				printf ("Received network response:\n");
+				printf ("%s\n", msg);
+				break;
+			}
+		}
+	}
+	else if (inputID == 2)//ID 2 send ID and key
+	{
+		int strsize;
+		buf[0] = (unsigned char)inputID;
+		sprintf (&buf[1], "%s", keybuf);
+		strsize = 1+strlen(keybuf)+1;		
+
+		for (i=1; i<=3; ++i)//send 3 times if time out
+		{
+			printf ("Sending network request.....\n");
+			printf ("----------------------------\n\n");
+	
+			sendto (c_sockt, buf, strsize, 0, (struct sockaddr *)&server, sizeof(server));
+			ret = select(c_sockt + 1, &my_fds, NULL, NULL, &timeout);
+			if (ret == -1)
+			{
+				perror ("Select");
+				return 0;
+			}
+			else if (ret == 0)
+			{
+				if (i == 3)
+				{
+					printf ("Connection Failed!\n");
+					return 0;
+				}
+				else
+				{
+					printf ("Timeout, retry..... \n");
+					sleep (3);
+				}
+			}
+			else
+			{
+				sleep (2);
+				recvfrom (c_sockt, msg, 2000, 0, NULL, NULL);//(struct sockaddr *)&server, &len);
+				printf ("Received network response:\n");
+				printf ("%s\n", msg);
+				break;
+			}
+		}
+	}
+	else if (inputID == 3)//ID 3 send ID, key, and value
+	{
+		int strsize;
+		buf[0] = (unsigned char)inputID;
+		sprintf (&buf[1], "%s%c%s", keybuf, '\0', valbuf);
+		strsize = 1+strlen(keybuf)+1+strlen(valbuf)+1;
+
+		for (i=1; i<=3; ++i)//send 3 times if time out
+		{
+			printf ("Sending network request.....\n");
+			printf ("----------------------------\n\n");
+	
+			sendto (c_sockt, buf, strsize, 0, (struct sockaddr *)&server, sizeof(server));
+			ret = select(c_sockt + 1, &my_fds, NULL, NULL, &timeout);
+			if (ret == -1)
+			{
+				perror ("Select");
+				return 0;
+			}
+			else if (ret == 0)
+			{
+				if (i == 3)
+				{
+					printf ("Connection Failed!\n");
+					return 0;
+				}
+				else
+				{
+					printf ("Timeout, retry..... \n");
+					sleep (3);
+				}
+			}
+			else
+			{
+				sleep (2);
+				recvfrom (c_sockt, msg, 2000, 0, NULL, NULL);//(struct sockaddr *)&server, &len);
+				printf ("Received network response:\n");
+				printf ("%s\n", msg);
+				break;
+			}
+		}
+	}
+	else if (inputID == 4)//ID 4 send ID and key
+	{
+		int strsize;
+		buf[0] = (unsigned char)inputID;
+		sprintf (&buf[1], "%s", keybuf);
+		strsize = 1+strlen(keybuf)+1;		
+
+		for (i=1; i<=3; ++i)//send 3 times if time out
+		{
+			printf ("Sending network request.....\n");
+			printf ("----------------------------\n\n");
+	
+			sendto (c_sockt, buf, strsize, 0, (struct sockaddr *)&server, sizeof(server));
+			ret = select(c_sockt + 1, &my_fds, NULL, NULL, &timeout);
+			if (ret == -1)
+			{
+				perror ("Select");
+				return 0;
+			}
+			else if (ret == 0)
+			{
+				if (i == 3)
+				{
+					printf ("Connection Failed!\n");
+					return 0;
+				}
+				else
+				{
+					printf ("Timeout, retry..... \n");
+				}
+			}
+			else
+			{
+				sleep (2);
+				recvfrom (c_sockt, msg, 2000, 0, NULL, NULL);//(struct sockaddr *)&server, &len);
+				printf ("Received network response:\n");
+				printf ("%s\n", msg);
+				break;
+			}
+		}
+	}
+	else//otherwise wrong ID input
+	{
+		printf ("Must enter MSG_ID!!!\n");
+		return 0;
+	}
+	return 0; 
+
+}

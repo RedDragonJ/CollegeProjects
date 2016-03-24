@@ -1,0 +1,415 @@
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <signal.h>
+#include <sys/time.h>
+#include <sys/ioctl.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <pthread.h>
+//system libraries
+
+typedef struct
+{
+	char* mybuf;
+	int numread;
+	int sock;
+	struct sockaddr_in clientaddr;
+}threadstruct;
+
+int Addtext (char k[], char text[]);//search and add to file
+int Deletetext (char k[]);//search and delete file
+int Edittext(char k[], char text[]);//search and edit file
+char* Gettext (char k[]);//search and get txt from file
+void* process(void* arg);
+
+int Addtext (char k[], char text[])
+{
+	char textfile[] = "UDPfile.txt";//filename
+
+	printf ("I'm at add file!\n");
+	printf ("ready read file\n");
+	FILE* Filein = fopen (textfile, "r");//open file to read
+	if (Filein == NULL)//check file
+	{
+		printf ("file not there!\n");
+		return 1;
+	}
+	else
+	{
+		printf ("read from file\n");
+		char t[200];
+		int bufread;
+		while (!feof(Filein))//loop if not end of file
+		{
+			if (fgets(t, 200, Filein))//read line from file
+			{
+				if (strstr(t, k) != NULL)//check for match the key		
+				{
+					return 2;//found return found
+				}
+			}
+		}
+	}	
+	fclose (Filein);//close read file	
+				
+	printf ("ready write file\n");
+	FILE* Fileout = fopen (textfile, "a");//open file to write create if not exist
+	if (Fileout == NULL)//check file
+	{
+		printf ("file not there!\n");
+		return 1;
+	}
+	else
+	{
+			char putfile[200];
+			strcpy (putfile, k);//copy key to buffer
+			strcat (putfile, "|");
+			strcat (putfile, text);//copy value to file and put null after
+			strcat (putfile, "\n");//put newline
+			fprintf (Fileout, "%s", putfile);
+	}
+	fclose (Fileout);//close write file
+	printf ("done write to file\n");
+	return 3;
+}
+
+int Deletetext (char k[])
+{
+	char textfile[] = "UDPfile.txt";//read text file
+	char textfile2[] = "newUDPfile.txt";//write to new text file
+
+	printf ("I'm at delete file!\n");
+	printf ("ready read file\n");
+	FILE* Filein = fopen (textfile, "r");//open file to read
+	FILE* Fileout = fopen (textfile2, "a");//open file to write create if not exist
+	if (Filein == NULL && Fileout == NULL)//check both file
+	{
+		printf ("file not there!\n");
+		return 1;
+	}
+	
+	printf ("read from file\n");
+	char t[200];
+
+	while((fgets(t, 200, Filein)) != NULL)//read line in file if not end of file
+	{
+		if (strstr(t, k) == NULL)//if not find key to delete			
+		{
+			printf ("%s", t);
+			fprintf (Fileout, "%s", t);//write rest of value to new file
+		}
+	}
+	fclose (Filein);//close read file
+	unlink (textfile);//delete read file
+	fclose (Fileout);//close write file
+		
+	int re;
+	re = rename (textfile2, textfile);//rename the newfile to original file name in order to reuse later
+	if (re == 0)//check for rename
+	{
+		printf ("File rename successful!\n");
+	}
+	else
+	{
+		printf ("Unable rename file!\n");
+		return 3;
+	}
+	return 2;
+}
+
+int Edittext(char k[], char text[])
+{
+	char textfile[] = "UDPfile.txt";
+	char textfile2[] = "newUDPfile.txt";
+
+	printf ("I'm at edit file!\n");
+	printf ("ready read file\n");
+	FILE* Filein = fopen (textfile, "r");//open read file
+	FILE* Fileout = fopen (textfile2, "a");//open write file
+	if (Filein == NULL && Fileout == NULL)//check both file
+	{
+		printf ("file not there!\n");
+		return 1;
+	}
+	
+	printf ("read from file\n");
+	char t[200];
+	char newbuf[200];
+	strcpy (newbuf, k);//copy key to buffer
+	strcat (newbuf, "|");
+	strcat (newbuf, text);//copy value to buffer and put null after
+	strcat (newbuf, "\n");//put newline
+
+	while((fgets(t, 200, Filein)) != NULL)//read line from file if not end of file
+	{
+		if (strstr(t, k) != NULL)//if match found 			
+		{
+			printf ("%s", t);
+			fprintf (Fileout, "%s", newbuf);//write the buffer to new file
+		}
+		else//otherwise
+		{
+			printf ("%s", t);
+			fprintf (Fileout, "%s", t);//write rest of value to new file
+		}
+	}
+	fclose (Filein);//close read file
+	unlink (textfile);//delete the read file
+	fclose (Fileout);//close write file
+		
+	int re;
+	re = rename (textfile2, textfile);//rename the new file to original file name in order to use later
+	if (re == 0)//check rename
+	{
+		printf ("File rename successful!\n");
+	}
+	else
+	{
+		printf ("Unable rename file!\n");
+		return 3;
+	}
+	return 2;
+}
+
+char* Gettext (char k[])
+{
+	char textfile[] = "UDPfile.txt";//read filename
+
+	printf ("I'm at get file!\n");
+	printf ("ready read file\n");
+	FILE* Filein = fopen (textfile, "r");//open file to read
+	if (Filein == NULL)//check file
+	{
+		printf ("file not there!\n");
+		char del1[] = "File not exist!\n";
+		char *a1 = del1;
+		return a1;		
+	}
+
+	printf ("read from file\n");
+	char t[200];
+	while (!feof(Filein))//if not end of file
+	{
+		if (fgets(t, 200, Filein))//read line from file
+		{
+			if (strstr(t, k) != NULL)//if match of key found			
+			{
+				//send back those things
+				printf ("%s\n", t);
+				char del3[] = "Key|value: ";
+				char del4[200];
+				char *a2;
+				strcpy (del4, del3);
+				strcat (del4, t);
+				strcat (del4, "\n");
+				a2 = del4;
+				return a2;
+			}
+		}
+		else//otherwise key not exist
+		{
+			char del2[] = "Key not found!\n";
+			char *a3 = del2;
+			return a3;
+		}
+	}		
+	fclose (Filein);//close read file
+}
+
+void* process(void* arg)
+{
+	sleep(1);//sleep 1 second to simulate the hard work
+	threadstruct* tsptr;//struct pointer
+	tsptr = (threadstruct* )arg;//new struct pointer point to the memory allocated struct
+
+	//debug whats in buf from new struct pointer
+	printf ("%d, %s, %s\n", tsptr->mybuf[0], &tsptr->mybuf[1], &tsptr->mybuf[1+sizeof(tsptr->mybuf[1])+1]);
+
+	int readID, strsize;
+	char key[50];
+	char val[100];
+	readID = tsptr->mybuf[0];//pick out ID
+	strcpy(key, &tsptr->mybuf[1]);//pick out key
+	strsize = 1+strlen(key)+1;//pick out value
+	strcpy(val, &tsptr->mybuf[strsize]); 		
+
+	//debug see if those value are correct
+	printf ("%d, %s, %s\n", readID, key, val);
+
+	if(readID == 1)//if 1 add to file
+	{
+		int answer;
+		char add1[] = "File not exist!\n";
+		char add2[] = "Key already exist!\n";
+		char add3[] = "Added successfully!\n";
+
+		answer = Addtext (key, val);//call add function then decide what to send
+		if (answer == 1)
+		{
+			sendto (tsptr->sock, add1, sizeof(add1), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 2)
+		{
+			sendto (tsptr->sock, add2, sizeof(add2), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 3)
+		{
+			sendto (tsptr->sock, add3, sizeof(add3), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else
+		{
+			char issue[] = "Add Error!\n";
+			sendto (tsptr->sock, issue, sizeof(issue), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr)); 
+		}
+	}
+	else if(readID == 2)//if 2 delete value and key
+	{
+		int answer;
+		char del1[] = "File not exist!\n";
+		char del2[] = "Delete value successful!\n";
+		char del3[] = "Delete fail!\n";		
+
+		answer = Deletetext (key);//call delete function then decide what to send
+		if (answer == 1)
+		{
+			sendto (tsptr->sock, del1, sizeof(del1), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 2)
+		{
+			sendto (tsptr->sock, del2, sizeof(del2), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 3)
+		{
+			sendto (tsptr->sock, del3, sizeof(del3), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else
+		{
+			char issue[] = "Delete Error!\n";
+			sendto (tsptr->sock, issue, sizeof(issue), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+	}
+	else if(readID == 3)//if 3 edit file with same key and new value
+	{
+		int answer;
+		char del1[] = "File not exist!\n";
+		char del2[] = "Edited value successful!\n";
+		char del3[] = "Edited fail!\n";		
+
+		answer = Edittext (key, val);//call edit function then decide what to send
+		if (answer == 1)
+		{
+			sendto (tsptr->sock, del1, sizeof(del1), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 2)
+		{
+			sendto (tsptr->sock, del2, sizeof(del2), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else if (answer == 3)
+		{
+			sendto (tsptr->sock, del3, sizeof(del3), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+		else
+		{
+			char issue[] = "Edit Error!\n";
+			sendto (tsptr->sock, issue, sizeof(issue), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+		}
+	}
+	else if(readID == 4)//if 4 get value with the certain key
+	{
+		char* answer;
+		char result[200];
+		answer = Gettext (key);//call get function
+		strcpy (result, answer);//copy pointer value to array then send
+		printf ("%s\n", result);
+		sendto (tsptr->sock, result, sizeof(result), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+	}
+	else//if all ID wrong send wrong ID signal
+	{
+		char msg[] = "Wrong ID! Send again!\n";
+		sendto (tsptr->sock, msg, sizeof(msg), 0, (struct sockaddr *)&tsptr->clientaddr, sizeof(tsptr->clientaddr));
+	}
+	free(tsptr->mybuf);
+	free(tsptr);
+	printf ("Success thread!\n");
+}
+
+int main ()
+{
+	int s_sockt, bindnum, len, bytes_r;
+	struct sockaddr_in server;//delcare socket
+	char readbuf[2000];//buffer to write and read
+
+	s_sockt = socket (AF_INET, SOCK_DGRAM, 0);//create socket
+	if (s_sockt == -1)//check socket
+	{
+		perror ("Socket");
+		return 0;
+	}
+	else
+	{
+		printf ("Socket opened!\n");
+	}
+
+	server.sin_family = AF_INET;//online mode
+	server.sin_addr.s_addr = htonl(INADDR_ANY);//address
+	server.sin_port = htons(7788);//port
+	len = sizeof(server);//socket struct size
+
+	bindnum = bind(s_sockt, (struct sockaddr *)&server, sizeof(server));//bind to socket
+	if (bindnum != 0)//check bind
+	{
+		perror ("bind");
+		return 0;
+	}	
+	else
+	{
+		printf ("Bind Success!\n");
+	}
+
+	for (;;)//infinite loop
+	{
+		bytes_r = recvfrom (s_sockt, readbuf, 2000, 0, (struct sockaddr *)&server, &len);//read msg from client
+		if (bytes_r > 0)//check what we read
+		{
+			readbuf[bytes_r] = '\0';		
+			printf ("Server waiting.....\n");
+			sleep(1);
+
+			printf ("%d, %s, %s\n", readbuf[0], &readbuf[1], &readbuf[1+sizeof(readbuf[1])+1]);
+	
+			//char newbuff[bytes_r];
+			char* bufcp;//pointer to allocate memory for copy buf to newbuf
+			bufcp = malloc(bytes_r);//allocate memory
+			memcpy(bufcp, readbuf, bytes_r);//deep copy readbuf to allocated memory
+			printf ("done mem allocat\n");
+			threadstruct *dataptr;//struct pointer
+			dataptr = malloc(sizeof(threadstruct));//allocate struct
+			printf("done struct mem allocation\n");
+			dataptr->mybuf = bufcp;//assign newbuf to struct pointer
+			printf ("done copy buf\n");
+			dataptr->numread = bytes_r;//assign bytes read from client to struct
+			printf ("done copy bytes\n");
+			dataptr->sock = s_sockt;//assign socket to struct
+			printf("done assign\n");
+			dataptr->clientaddr = server;//assign client ip and other stuff to struct			
+
+			//debug my buf from struct
+			printf ("%d, %s, %s\n", dataptr->mybuf[0], &dataptr->mybuf[1], &dataptr->mybuf[1+sizeof(dataptr->mybuf[1])+1]);
+
+			printf ("start thread\n");
+			pthread_attr_t attr;//declare attribute
+			pthread_attr_init(&attr); 
+			pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);//set attribute to detached thread
+			pthread_t mythread;//create thread
+			pthread_create(&mythread, &attr, process, (void*)dataptr);//thread call function and pass value in
+		}
+	}
+	return 0;
+}

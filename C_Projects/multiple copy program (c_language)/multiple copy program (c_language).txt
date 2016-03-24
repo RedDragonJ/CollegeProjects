@@ -1,0 +1,114 @@
+Script started on Sun 14 Sep 2014 02:05:48 AM EDT
+]0;has92@acm:~/cs1163/filecopy[?1034h[has92@acm filecopy]$ whoami
+has92
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ date
+Sun Sep 14 02:05:53 EDT 2014
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ car[Kt has92cp.c
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <string.h>
+
+int main (int argc, char* argv[])
+{
+
+	char buffer[1024]; // allocate buffer
+	char desfile1[] = "smallfile.txt"; // char array
+	char desfile2[] = "largefile.txt"; // char array
+	char* fname ; // input char pointer
+	fname = argv[1]; // assign input val to char pointer
+	int numcp, i, nread; // declare integers
+	numcp = atoi (argv[2]); // convert character to integer
+	int Filein, Fileout; // declare file oupt value
+	
+	if (argc != 3 || numcp < 1) 
+	// check if input 3 arguments and input number of file copy not less than 1
+	{
+		printf ("\n%s\n", "You typed wrong number of argument\nor\nwrong number of files need be coppied!\n");
+	}
+
+	if (((strcmp(desfile1, fname)) != 0) && ((strcmp(desfile2, fname)) != 0))
+	// check if the input file match either files that on record
+	{
+		printf ("\n%s\n\n", "Couldn't found file!");
+	}	
+	
+	Filein = open(fname, O_RDONLY);	// open source file and ready to read
+	while ((nread = (read(Filein, buffer, sizeof(buffer)))) > 0)
+	// read the source file in a block of data
+	{
+		if (strcmp(desfile1, fname) == 0)
+		// check if this is the input file "smallfile.txt"
+		{
+			for (i=1; i<=numcp; ++i)
+			// loop and copy many files as user asked
+			{
+				char newfname1[sizeof"smallfile.txt"]; // find out the string length
+				sprintf (newfname1, "smallfile%d.txt", i); // assign changed sring name to char variable
+				Fileout = open (newfname1, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR); // open the new file and ready to write
+				write (Fileout, buffer, nread); // copy the source file contents into new file
+				close(Fileout); // close the new file
+			}
+		}
+		else
+		{
+		// check if this is the input file "largefile.txt"
+			for (i=1; i<=numcp; ++i)
+			{
+			// loop and copy many files as user asked
+				char newfname2[sizeof"largefile.txt"]; // find out the string length
+				sprintf (newfname2, "largefile%d.txt", i); // assign changed string name to char variable
+				Fileout = open (newfname2, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR); // open the new file and ready to write
+				write (Fileout, buffer, nread); // copy the source file contents into new file
+				close(Fileout); // close the new file
+			}
+		}
+	}	
+
+	close(Filein); // close source file
+	
+	return 0; // terminate program
+}
+	
+
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ gaa[K[Kcc has92cp.c
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out file file 4 2 5 34
+
+You typed wrong number of argument
+or
+wrong number of files need be coppied!
+
+
+Couldn't found file!
+
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./[K[K./a.out file file 4 2 5 34[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K smallfile.txt -3
+
+You typed wrong number of argument
+or
+wrong number of files need be coppied!
+
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out smallfile.txt -3[C[C[C[K2[1P[1P[1P[1P[1P[1@l[1@a[1@r[1@g[1@e
+
+You typed wrong number of argument
+or
+wrong number of files need be coppied!
+
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out largefile.txt -2[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Ksmallfile.txt [K[K[K[K[K[K[K[K[K[K[K[K[K[Kfile.txt 3
+
+Couldn't found file!
+
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out file.txt 3[K[K[K[K[K[K[K[K[K[Ksmallfile.txt 1
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out smallfile.txt 1[C[1P[1P[1P[1P[1P[1@l[1@a[1@r[1@g[1@e
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out largefile.txt 1small[C[C[C[C[C[C[C[C[C[C[K3
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ ./a.out smallfile.txt 3largefile.txt 1[K2
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ diff smallfile.txt smallfile2[K3.txt
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ diff smallfile.txt smallfile3.txt[1P.txt2.txt
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ diff smallfile.txt smallfile2.txt[C[1P.txt1.txt
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ fiff [K[K[K[K[Kdiff largefile.txt largefile2.txt
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ diff largefile.txt largefile2.txt[1P.txt1.txt
+]0;has92@acm:~/cs1163/filecopy[has92@acm filecopy]$ exit
+exit
+
+Script done on Sun 14 Sep 2014 02:08:28 AM EDT

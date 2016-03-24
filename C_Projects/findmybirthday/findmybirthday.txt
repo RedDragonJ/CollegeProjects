@@ -1,0 +1,414 @@
+Script started on Fri 03 Oct 2014 10:35:51 PM EDT
+]0;has92@acm:~/cs1163/birthday[?1034h[has92@acm birthday]$ whoami
+has92
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ cat has92bd.c
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[])
+{
+	//decalre array of days in each month in a year
+	int normalyear[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+
+	// declare variables
+	int mnum/*declare my birth month*/, dnum/*declare my birth date*/;
+	int mm, dd, yyyy;//declare current month, date, and years
+
+	//create character buffer of 20
+	char newstr1[20];
+	//copy second string of pass in paramter into the buffer
+	strcpy (newstr1, argv[1]);
+
+	//create a pointer for strtok
+	char *newstr2;
+	//scan string separate with "/" from beginning
+	newstr2 = strtok (newstr1, "/");
+	//convert the string infront of "/" to integer
+	mnum = atoi(newstr2);
+	//scan string separate with "/" until null
+	newstr2 = strtok (NULL, "/");
+	//convert the string after "/" to integer
+	dnum = atoi(newstr2);	
+	
+	//delcare time struct, and time variale
+	struct tm *tm_ptr;
+	time_t the_time;
+	
+	//assign to the address
+	(void)time(&the_time);
+	//assign converted time to time struct
+	tm_ptr = gmtime(&the_time);
+
+	//assign current month, date, years
+	mm = tm_ptr->tm_mon+1;
+	dd = tm_ptr->tm_mday-1;
+	yyyy = tm_ptr->tm_year+1900;
+	
+	//check if current month smaller than my birth month
+	if (mm < mnum)
+	{
+		//check if my birth month within these months
+		if (mnum == 1 || mnum == 3 || mnum == 5 || mnum == 7 || mnum == 8 || mnum == 10 || mnum == 12)
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+			//find out how many days left in the current month
+			if (dd <= 31)
+			{
+				dday1 = 31-dd;
+			}	
+			//find out how many days past in my birth month
+			if (dnum >= 1)
+			{
+				dday2 = dnum;
+			}
+			//add days of months that one month after current month and one moneth earlier than my birth month
+			for (i=mm; i<(mnum-1); ++i)
+			{
+				mday = mday+normalyear[i];
+			}
+			//check for leap year
+			if ((mm < 2) && ((yyyy%4==0) && (!(yyyy%100==0) || (yyyy%400==0))))
+			{
+				//add 1 day if in leap year
+				days = dday1 + dday2 + mday + 1;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//otherwise just add all the days
+			else
+			{	
+				days = dday1 + dday2 + mday;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+		}
+		//check if my birth month within these months
+		else if (mnum == 4 || mnum == 6 || mnum == 9 || mnum ==11)
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+			// find out how many days left in the current month
+			if (dd <= 30)
+			{
+				dday1 = 30-dd;
+			}
+			//find out how many days past in my birth month
+			if (dnum >= 1)
+			{
+				dday2 = dnum;
+			}
+			//add days of months that one month after current month and one month earlier than my birth month
+			for (i=mm; i<(mnum-1); ++i)
+			{
+				mday = mday+normalyear[i];
+			}
+			//check fir leap year
+			if ((mm < 2) && ((yyyy%4==0) && (!(yyyy%100==0) || (yyyy%400==0))))
+			{
+				//add 1 day if in leap year
+				days = dday1 + dday2 + mday + 1;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//otherwise just add all the days
+			else 
+			{
+				days = dday1 + dday2 + mday;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+		}
+		//check if my birth month is in February
+		else
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+			//find current days of Januray
+			if (dd <= 31)
+			{
+				dday1 = 31-dd;
+			}
+			//find how many days past in February
+			if (dnum >= 1)
+			{
+				dday2 = dnum;
+			}
+			//add those days
+			days = dday1 + dday2;
+			printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+		}
+	}
+	//check if current month greater than my birth month
+	else if (mm > mnum)
+	{
+		//check if my birth month within these months
+		if (mnum == 1 || mnum == 3 || mnum == 5 || mnum == 7 || mnum == 8 || mnum == 10 || mnum == 12)
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+			//find how many days past in current month
+			if (dd >= 1)
+			{
+				dday1 = dd;
+			}
+			//find how many days left in my birth month
+			if (dnum <= 31)
+			{
+				dday2 = 31-dnum;
+			}
+			//add all the days of months one month after the birth month and one month earlier than current month
+			for (i=mnum; i<(mm-1); ++i)
+			{
+				mday = mday+normalyear[i];
+			}
+			//check if next year is leap year
+			if ((yyyy+1%4==0) && (!(yyyy+1%100==0) || (yyyy+1%400==0)))
+			{
+				//then substrct and find out how many days until my birthday in next leap year
+				days = 366 - (dday1 + dday2 + mday);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//otherwise just sudstract and find out the days in non-leap year
+			else
+			{
+				days = 365 - (dday1 + dday2 + mday);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+		}
+		//check if my birth month within these months
+		else if (mnum == 4 || mnum == 6 || mnum == 9 || mnum == 11)
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+			//find how many days past in current month
+			if (dd >= 1)
+			{
+				dday1 = dd;
+			}
+			//find how many days left in my birth month
+			if (dnum <= 30)
+			{
+				dday2 = 30 - dnum;
+			}
+			//add all the days of months one moneth after the birth month and one month earlier than current month
+			for (i=mnum; i<(mm-1); ++i)
+			{
+				mday = mday+normalyear[i];
+			}
+			//check if next year is leap year
+			if ((yyyy+1%4==0) && (!(yyyy+1%100==0) || (yyyy+1%400==0)))
+			{
+				//then substract and find out how many days until my birthday in next leap year
+				days = 366 - (dday1 + dday2 + mday);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//otherwise just substract and find out the days in non-leap year
+			else
+			{
+				days = 365 - (dday1 + dday2 + mday);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+		}
+		//check if if my birth month in Feburary
+		else
+		{
+			int i, mday, dday1, dday2, days;
+			mday = 0;
+
+			//if birthday is exactly on 2/29 then output sorry
+			if (dnum == 29)
+			{
+				printf ("\n%s\n\n", "Sorry! Your birthday in another leap year!(lol)");
+			}
+			//find how many days past in current month
+			if (dd >= 1)
+			{
+				dday1 = dd;
+			}
+			//check if next year is leap year
+			if ((yyyy+1%4==0) && (!(yyyy+1%100==0) || (yyyy+1%400==0)))
+			{ 
+				//how many days left in Feburary
+				if (dnum <= 29)
+				{
+					dday2 = 29-dnum;
+				}
+				//add days of month that one month after Feburary and one month earlier than current month
+				for (i=mnum; i<(mm-1); ++i)
+				{
+					mday = mday+normalyear[i];
+				}
+				//find out how many days until my birthday
+				days = 366 - (dday1 + dday2 + mday + 1);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//otherwise just find out days
+			else
+			{
+				if (dnum <= 28)
+				{
+					dday2 = 28-dnum;
+				}
+				for (i=mnum; i<(mm-1); ++i)
+				{
+					mday = mday+normalyear[i];
+				}
+				days = 365 - (dday1 + dday2 + mday);
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+		}
+	}
+	//check if current month equal to my birth month
+	else
+	{
+		//if current month(!!!!!birth month of current month doesn't matter here!!!!!)
+		//eqaul these months
+		if (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12)
+		{
+			int days;
+			//check if days before my birth day
+			if (dd >= 1 && dd < dnum)
+			{
+				//find out how many days until my birthday
+				days = dnum-dd;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//check if current day after my birth day
+			else if (dd <= 31 && dd > dnum)
+			{ 
+				int realbday;
+				//find how many days after my birthday
+				days = dd-dnum;
+				//check if next year is leap year
+				if ((yyyy+1%4==0) && (!(yyyy+1%100==0) || (yyyy+1%400==0)))
+				{
+					//find how many days until my next year birthday at same month
+					realbday = 366-days;
+					printf ("\n%s %d %s\n\n", "Your birthday in", realbday, "days");
+				}
+				//otherwise just find out the days
+				else
+				{
+					realbday = 365-days;
+					printf ("\n%s %d %s\n\n", "Your birthday in", realbday, "days");
+				}
+			}
+			//otherwise today is my birthday
+			else
+			{
+				printf ("\n%s\n\n", "Today is your birthday!");
+			}	
+		}
+		//check if current(!!!!!same as top!!!!!) month equal these month
+		else if (mm == 4 || mm == 6 || mm == 9 || mm == 11)
+		{
+			int days;
+			//check if days before my birth day
+			if (dd >= 1 && dd < dnum)
+			{
+				//find out how many days until my birthday
+				days = dnum-dd;
+				printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+			}
+			//check if current day after my birth day
+			else if (dd <= 30 && dd > dnum)
+			{
+				int realbday;
+				//find how many days after my birthday
+				days = dd-dnum;
+				//check if next year is leap year
+				if ((yyyy+1%4==0) && (!(yyyy+1%100==0) || (yyyy+1%400==0)))
+				{
+					//find how many days until my next birthday at same month
+					realbday= 366-days;
+					printf ("\n%s %d %s\n\n", "Your birthday in", realbday, "days");
+				}
+				//otherwise just find out the days
+				else
+				{
+					realbday = 365-days;
+					printf ("\n%s %d %s\n\n", "Your birthday in", realbday, "days");
+				}
+			}
+			//otherwise today is my birthday
+			else
+			{
+				printf ("\n%s\n\n", "Today is your birthday!");
+			}
+		}
+		//check if current month is in Feburary as same as the birth month
+		else
+		{
+			//check if next year is leap year
+			if ((yyyy%4==0) && (!(yyyy%100==0) || (yyyy%400==0)))
+			{
+				int days;
+				//check if current day smaller then my birthday
+				if (dd >= 1 && dd < dnum)
+				{
+					//find out how many days until my birthday
+					days = dnum-dd;
+					printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+				}
+				//check if current day greater than my birthday
+				else if (dd <= 29 && dd > dnum)
+				{	
+					//if current day past my birthday then find out how
+					//many days until my birthday in next year at same month
+					days = 366-dd;
+					printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+				}
+				//otherwise today is my birthday
+				else
+				{
+					printf ("\n%s\n\n", "Today is your birthday!");
+				}
+			}
+			//if not leap year
+			else
+			{
+				int days;
+				//check if current day smaller than my birthday 
+				if (dd >= 1 && dd < dnum)
+				{
+					//find out how many days until my birthday
+					days = dnum-dd;
+					printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+				}
+				//check if current day greater than my birthday
+				else if (dd <= 28 && dd > dnum)
+				{
+					//if current day past my birthday then find out how
+					//many days until my birthday in next year at same month
+					days = 365-dd;
+					printf ("\n%s %d %s\n\n", "Your birthday in", days, "days");
+				}
+				//otherwise today is my birthday
+				else
+				{
+					printf ("\n%s\n\n", "Today is your birthday!");
+				}
+			}
+		}
+	}
+
+	return 0;	
+}
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ gcc has92bd.c
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ date
+Fri Oct  3 22:36:19 EDT 2014
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ ./a.out 10/15
+
+Your birthday in 12 days
+
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ ./a.out 10/15[K[K[K[K[K1/1
+
+Your birthday in 90 days
+
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ ./a.out 1/1[K[K[K[K 9/15
+
+Your birthday in 347 days
+
+]0;has92@acm:~/cs1163/birthday[has92@acm birthday]$ exit
+exit
+
+Script done on Fri 03 Oct 2014 10:37:44 PM EDT

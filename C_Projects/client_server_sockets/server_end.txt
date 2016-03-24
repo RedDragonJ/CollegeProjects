@@ -1,0 +1,262 @@
+//system libraries
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <time.h>
+
+int main ()
+{
+	//declare variables
+	int s_sockt, c_size, bindnum, listennum, acceptnum, readnum, writenum;
+	struct sockaddr_in server, client;//declare socket for server and incoming client
+	char buf[2];
+	char message[2000];//buffer for input and output values
+	
+	struct tm*tm_ptr, timestruct;//declare time stuffs
+	time_t the_time;
+	char t_buf[256];
+	(void)time(&the_time);
+	tm_ptr = localtime(&the_time);
+
+	struct mynewdata//structure to contain incoming message and flag
+	{
+		int msg;
+		int flag;
+	};
+	struct mynewdata msptr;//structure pointer
+
+	//open socket
+	s_sockt = socket (AF_INET, SOCK_STREAM, 0);
+	if (s_sockt < 0)//debug socket
+	{
+		perror ("socket");
+		return (1);
+	}
+	else
+	{
+		printf ("Socket Opened!\n");
+	}
+
+	//declare the ip and port
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = htonl(INADDR_ANY);
+	server.sin_port = htons(3344);
+	
+	//bind to incoming connection
+	bindnum = bind(s_sockt, (struct sockaddr *)&server, sizeof(server));
+	if (bindnum != 0)//debug bind
+	{
+		perror ("bind");
+		return (1);
+	}
+	else
+	{
+		printf ("Bind Success!\n");
+	}
+
+	//listen on the port for incoming data
+	listennum = listen (s_sockt, 5);
+	if (listennum == 0)//debug listen
+	{
+		printf ("Waiting for incoming connections....\n");
+	}
+	else
+	{
+		perror ("Listen");
+		return (1);
+	}
+
+	//size of client socket
+	c_size = sizeof(client);
+	//loop forever accept for incoming stuffs
+	while((acceptnum = accept(s_sockt, (struct sockaddr*)&client, (socklen_t*)&c_size))>=0)
+	{
+	if (acceptnum < 0)//debug accept if break down
+	{
+		sprintf (message, "%s", "Server Terminated!");
+		write (acceptnum, message, sizeof(message));
+		return(1);
+	}
+	
+	//read incoming data to buffer
+	readnum = read (acceptnum, buf, sizeof(buf));
+	if (readnum < 0)//debug read
+	{
+		perror ("ERROR readfing from socket");
+		return 1;
+	}
+
+	//assign value to struct
+	msptr.msg = buf[0];
+	msptr.flag = buf[1];
+	
+	//decide what to send back
+	if (msptr.msg == 1)
+	{
+		if (msptr.flag == 1)
+		{
+			int mm;
+			mm = tm_ptr->tm_mon+1;
+			sprintf(message, "%s%d%s", "The month is ", mm, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return 1;
+			}
+		}
+		else if (msptr.flag == 2)
+		{
+			strftime(t_buf, 256, "%B", tm_ptr);
+			sprintf(message, "%s%s%s", "The month is ", t_buf, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else 
+		{
+			sprintf (message, "%s", "\nWrong Flag ID!\n");
+			write (acceptnum, message, sizeof(message));
+			//return (1);
+		}
+	}
+	else if (msptr.msg == 2)
+	{
+		if (msptr.flag == 1)
+		{
+			int mm;
+			mm = tm_ptr->tm_mday;
+			sprintf(message, "%s%d%s", "The day is ", mm, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else if (msptr.flag == 2)
+		{
+			strftime(t_buf, 256, "%A", tm_ptr);
+			sprintf(message, "%s%s%s", "The day is ", t_buf, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else 
+		{
+			sprintf (message, "%s", "\nWrong Flag ID!\n");
+			write (acceptnum, message, sizeof(message));
+			//return (1);
+		}
+	
+	}
+	else if (msptr.msg == 3)
+	{
+		if (msptr.flag == 1)
+		{
+			int yyyy;
+			yyyy = tm_ptr->tm_year+1900;
+			sprintf(message, "%s%d%s", "The year is ", yyyy, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else if (msptr.flag == 2)
+		{
+			int yyyy;
+			yyyy = (tm_ptr->tm_year+1900)%100;
+			sprintf(message, "%s%d%s", "The year is ", yyyy, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else 
+		{
+			sprintf (message, "%s", "\nWrong Flag ID!\n");
+			write (acceptnum, message, sizeof(message));
+			//return (1);
+		}
+	}
+	else if (msptr.msg == 4)
+	{
+		if (msptr.flag == 1)
+		{
+			strftime(t_buf, 256, "%I %p", tm_ptr);
+			sprintf(message, "%s%s%s", "The hour in 12 is ", t_buf, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else if (msptr.flag == 2)
+		{
+			strftime(t_buf, 256, "%H %p", tm_ptr);
+			sprintf(message, "%s%s%s", "The hour in 24 is ", t_buf, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else 
+		{
+			sprintf (message, "%s", "\nWrong Flag ID!\n");
+			write (acceptnum, message, sizeof(message));
+			//return (1);
+		}
+	}
+	else if (msptr.msg == 5)
+	{
+		if (msptr.flag == 1)
+		{
+			int min;
+			min = tm_ptr->tm_min;
+			sprintf(message, "%s%d%s", "The minute is ", min, ".");
+			writenum = write (acceptnum, message, sizeof(message));
+			if (writenum < 0)
+			{
+				perror ("ERROR writing to socket");
+				//return (1);
+			}
+		}
+		else 
+		{
+			sprintf (message, "%s", "\nWrong Flag ID!\n");
+			write (acceptnum, message, sizeof(message));
+			//return (1);
+		}
+
+	}
+	else
+	{
+		sprintf (message, "%s", "\nWrong MSG ID!\n");
+		write (acceptnum, message, sizeof(message));
+		//return (1);
+	}
+	
+	sleep(5);//rest for 5 seconds
+	}
+	
+	return (0);
+}

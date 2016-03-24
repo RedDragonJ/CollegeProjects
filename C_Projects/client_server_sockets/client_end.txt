@@ -1,0 +1,87 @@
+//system libraries
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+
+int main ()
+{
+	//variables
+	int c_sockt;
+	int addrlen;
+	struct sockaddr_in server;//declare socket for connect to server
+	int num, num1, num2;
+	char buf[2], reply[2000];//buffer for input and output
+
+	//a structure contain message and flag
+	struct mydata
+	{
+		int msg;
+		int flag;
+	};
+	struct mydata msgptr;//structure pointer
+	
+	//open socket for internect connection
+	c_sockt = socket(AF_INET, SOCK_STREAM, 0);
+	if (c_sockt < 0)//debug for open socket
+	{
+		perror ("Socket");
+		return (1);
+	}
+	else
+	{
+		printf ("Socket opened!\n");
+	}
+
+	//declare server ip, port
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = inet_addr("54.165.200.0");
+	server.sin_port = htons(3344);
+
+	//connect to the server
+	num = connect(c_sockt, (struct sockaddr *)&server, sizeof(server));
+	if (num == 0)//debug connection
+	{
+		printf ("Connect Success!\n");
+	}
+	else
+	{
+		perror ("Connect");
+		return (1);
+	}
+
+	//user enter message and flag
+	printf ("\n%s", "Enter your message: ");
+	scanf ("%d", &(msgptr.msg));
+	printf ("\n%s", "Enter your flag number: ");
+	scanf ("%d", &(msgptr.flag));
+
+	//assign this to one buffer
+	buf[0] = msgptr.msg;
+	buf[1] = msgptr.flag;
+
+	//write the buffer to server
+	num1 = (write (c_sockt, buf, sizeof(buf)));
+	if (num1 < 0)//check if write wrong
+	{
+		perror ("ERROR writing to socket");
+	}
+	
+	//read from server and write into a new buffer
+	num2 = read (c_sockt, reply, sizeof(reply));
+	if (num2 < 0)//check if the read wrong
+	{
+		perror ("ERROR reading from socket");
+	}
+	
+	//display the string got from server
+	printf ("\n%s\n\n", reply);
+
+	//close client socket
+	close(c_sockt);
+	return (0);
+}
