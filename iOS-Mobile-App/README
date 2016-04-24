@@ -1,5 +1,6 @@
  - Due to the size of those project, i only can show the classes.
 
-- Published iOS app: https://itunes.apple.com/us/app/oneshare./id1071114570?mt=8 (I could not show the project or code of this app for copy right purpose since this is a public repository.)
+- Published iOS app: https://itunes.apple.com/us/app/sharehub/id1071114570?ls=1&mt=8 
+(I could not show the project or code of this app for copy right purpose since this is a public repository.)
 
 - I'm currently working on my second iOS app that will push and pull JSON data to my php server where it will interact with my sql database.
