@@ -1,0 +1,52 @@
+void MergeSort (int newarr[], int left, int right)
+{
+	int mid;
+	
+	if (left<right)
+	{
+		mid = (left+right)/2;
+		MergeSort (newarr, left, mid);
+		MergeSort (newarr, mid+1, right);
+		Merge (newarr, left, right, mid);
+	}
+}
+
+void Merge (int newarr[], int left, int right, int mid)
+{
+	int i, j, a, b[left+right+1];
+	i = left;
+	a = left;
+	j = mid+1;
+
+	while (i<=mid && j<=right)
+	{
+		if (newarr[i]<newarr[j])
+		{
+			b[a] = newarr[i];
+			a++;
+			i++;
+		}
+		else
+		{
+			b[a] = newarr[j];
+			a++;
+			j++;
+		}
+	}
+	while (i<=mid)
+	{
+		b[a] = newarr[i];
+		a++;
+		i++;
+	}
+	while (j<=right)
+	{
+		b[a] = newarr[j];
+		a++;
+		j++;
+	}
+	for (i=left; i<a; i++)
+	{
+		newarr[i] = b[i];
+	}
+}

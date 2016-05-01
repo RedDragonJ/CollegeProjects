@@ -1,0 +1,38 @@
+
+int partitionForRegular (int newarr[], int left, int right )
+{
+    int pivot = newarr[right];
+    
+    while (left < right)
+    {
+          while (newarr[left] < pivot)
+          {
+                left++;
+          }
+          while (newarr[right] > pivot)
+          {
+                right--;
+          }
+          
+          if (newarr[left] == newarr[right])
+          {
+                 left++;
+          }
+          else if (left < right)
+          {
+               int temp = newarr[left];
+               newarr[left] = newarr[right];
+               newarr[right] = temp;
+           }
+    }
+    return right;
+}
+void quickSort (int newarr[], int left, int right)
+{
+     if (left < right)
+     {
+              int j = partitionForRegular(newarr, left, right);
+              quickSort(newarr, left, j-1);
+              quickSort(newarr, j+1, right);
+     }
+ }

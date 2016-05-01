@@ -1,0 +1,32 @@
+void QuickSortWithRandom (int newarr[], int left, int right)
+{
+	int p, l, r, temp;
+	l = left;
+	r = right - 1;
+	int size = r - l;
+	
+	if (size > 1)
+	{
+		p = newarr[rand()%size+l];
+		while (l<r)
+		{
+			while (newarr[r]>p && r>l)
+			{
+				r--;
+			}
+			while (newarr[l]<p && l<=r)
+			{
+				l++;
+			}
+			if (l<r)
+			{
+				temp = newarr[l];
+				newarr[l] = newarr[r];
+				newarr[r] = temp;
+				l++;
+			}
+		}
+		QuickSortWithRandom (newarr, left, l);
+		QuickSortWithRandom (newarr, r, right);
+	}
+}

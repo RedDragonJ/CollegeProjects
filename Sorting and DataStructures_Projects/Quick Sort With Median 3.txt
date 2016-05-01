@@ -1,0 +1,56 @@
+int Partition(int newarr[], int left, int right)
+{
+	int temp;
+	int a=newarr[right];
+	int i=left-1;
+	
+	for (int j=left; j<right; j++)
+	{
+		if (newarr[j] <= a)
+		{
+			i++;
+			temp = newarr[i];
+			newarr[i] = newarr[j];
+			newarr[j] = temp;	
+		}
+	}
+	temp = newarr[i+1];
+	newarr[i+1] = newarr[right];
+	newarr[right] =temp;
+	
+	return i+1;
+}
+
+void QuickSortMedianThree (int newarr[], int left, int right)
+{
+	int l, r, m, temp, p;
+	l=left;
+	r=right;
+
+	if (l<r)
+	{
+		m=(l+r)/2;
+		
+		if (newarr[l]>newarr[r])
+		{
+			temp = newarr[l];
+			newarr[l] = newarr[r];
+			newarr[r] = temp;
+		}
+		if (newarr[l]>newarr[m])
+		{
+			temp = newarr[l];
+			newarr[l] = newarr[m];
+			newarr[m] = temp;
+		}
+		if (newarr[r]>newarr[m])
+		{
+			temp = newarr[r];
+			newarr[r] = newarr[m];
+			newarr[m] = temp;
+		}
+		p = Partition(newarr, l, r);
+		QuickSortMedianThree(newarr, l, p-1);
+		QuickSortMedianThree(newarr, p+1, r);
+	}
+}

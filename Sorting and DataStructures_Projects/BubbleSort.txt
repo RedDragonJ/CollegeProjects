@@ -1,0 +1,56 @@
+Script started on Sat 20 Sep 2014 12:18:10 AM EDT
+]0;has92@acm:~/cs1713/sorting[?1034h[has92@acm sorting]$ cat sorts.cpp
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+int main ()
+{
+	clock_t start, stop;
+	
+	int intarray[20] = {2,3,4,5,6,8,5,1,10,20,19,17,18,15,14,16,9,11,13};
+	int i, j, temp;
+
+	cout << endl;
+	cout << "Bubble sort" << endl;
+	
+	cout << "Oringinal array: ";
+	for (i=0; i<20; i++)
+	{
+		cout << intarray[i];
+	}
+	cout << endl;
+
+	cout << "New array: ";
+	start = clock();
+	for (i=0; i<19; i++)
+	{
+		for (j=0; j<(20-i-1); j++)
+		{
+			if (intarray[j] > intarray[j+1])
+			{
+				temp = intarray[j];
+				intarray[j] = intarray[j+1];
+				intarray[j+1] = temp;
+			}
+		}
+	}
+	stop = clock();
+	
+	for (i=0; i<20; i++)
+	{
+		cout << intarray[i];
+	}
+	cout << endl;
+
+	cout << "Time of sort is: " << ((float)(stop - start)) << " seconds" << endl;
+	cout << endl;	
+
+	return 0;
+	
+}
+]0;has92@acm:~/cs1713/sorting[has92@acm sorting]$ exit
+exit
+
+Script done on Sat 20 Sep 2014 12:18:27 AM EDT

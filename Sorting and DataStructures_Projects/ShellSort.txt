@@ -1,0 +1,66 @@
+Script started on Sat 20 Sep 2014 12:50:38 AM EDT
+]0;has92@acm:~/cs1713/sorting[?1034h[has92@acm sorting]$ cat sorts.cpp
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+int main ()
+{
+	clock_t start, stop;
+	
+	int intarray[20] = {2,3,4,5,6,8,5,1,10,20,19,17,18,15,14,16,9,11,13};
+	int h, i, j, temp;
+
+	cout << endl;
+	cout << "Shell sort" << endl;
+	
+	cout << "Oringinal array: ";
+	for (i=0; i<20; i++)
+	{
+		cout << intarray[i];
+	}
+	cout << endl;
+
+	cout << "New array: ";
+	start = clock();
+	
+	h=1;
+	while (h <= (20-1)/9)
+	{
+		h = 3 * h + 1;
+	}
+	while (h > 0)
+	{
+		for (i=h; i<19; i++)
+		{
+			temp = intarray[i];
+			j = i - h;
+			while (j >= 0 && intarray[j] > temp)
+			{
+				intarray[j+h] = intarray[j];
+				j = j - h;
+			}
+			intarray[j+h] = temp;
+		}
+		h = h/3;
+	}
+
+	stop = clock();
+	
+	for (i=0; i<20; i++)
+	{
+		cout << intarray[i];
+	}
+	cout << endl;
+
+	cout << "Time of sort is: " << ((float)(stop - start)) << " seconds" << endl;
+	cout << endl;	
+
+	return 0;
+	
+}
+]0;has92@acm:~/cs1713/sorting[has92@acm sorting]$ exit
+exit
+
+Script done on Sat 20 Sep 2014 12:50:47 AM EDT
