@@ -1,0 +1,1 @@
+Here are some major parts i worked on when i was in Sevenlogics
