@@ -3,6 +3,11 @@
 - Due to the size of those project, i only can show the classes.
 
 - Published iOS app (ShareHub): https://itunes.apple.com/ie/app/sharehub/id1071114570?mt=8
-  (Main iOS SDK usage: CoreImage, AVFoundation, Social)
+  (Main iOS SDK usage: CoreImage, AVFoundation, Social, etc.) 
+  1. This is an camera app with image filter and ability to share to social media, save, and send through email.
+  2. Google AdMob
   
-- Another iOS app will be delivery to app store before end of March, 2017
+- Published iOS app (FunEd): waiting for review
+  (Main ios SDK usage: CoreAnimation, CoreData, etc)
+  1. This is a child educational app with tableviews, import data and save to CoreData. 
+  2. Google AdMob
