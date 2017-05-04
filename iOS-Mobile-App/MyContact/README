@@ -1,0 +1,5 @@
+This project demostrate the use of NSURLConnection, however it also can use NSURLSession, AFNetworking, or other RESTful API.
+
+The data handle can use CoreData, sqlite, or plist depend on the situation. But i just temp store data on memory instead for now.
+
+The UI can be improved by use custom views for better user experiences.
