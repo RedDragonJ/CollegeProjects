@@ -1,0 +1,2 @@
+This project is a simulation of an music app use Spotify API. It loads json then parse into different variables.
+Accessed by tableviews and sorted, user also can search related name in the search bar. It also provides sample of music. etc.
