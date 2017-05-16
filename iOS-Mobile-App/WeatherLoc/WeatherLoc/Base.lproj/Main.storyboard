@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Weather Main Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="WeatherMainController" customModule="WeatherLoc" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HyL-Cq-0Uh">
+                                <rect key="frame" x="13" y="20" width="350" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="Z9a-R7-xBu"/>
+                                    <constraint firstAttribute="height" constant="350" id="nTO-BR-ayL"/>
+                                </constraints>
+                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ax9-An-kjW">
+                                <rect key="frame" x="13" y="369" width="350" height="299"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="299" id="QPc-oa-EtC"/>
+                                    <constraint firstAttribute="width" constant="350" id="pkL-D3-NQR"/>
+                                </constraints>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="8WJ-6o-8Iw"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="A6o-7a-mgg"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naP-1d-84m">
+                                <rect key="frame" x="108" y="27" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.23529411764705882" green="0.70196078431372544" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F9B-zD-ofX">
+                                <rect key="frame" x="68" y="26" width="32" height="32"/>
+                                <color key="backgroundColor" red="0.86274509803921573" green="0.078431372549019607" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="1kt-rl-0v6"/>
+                                    <constraint firstAttribute="width" constant="32" id="jqy-Gh-Aet"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBc-Mz-cDA">
+                                <rect key="frame" x="301" y="311" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="3tE-UG-FRw"/>
+                                    <constraint firstAttribute="height" constant="50" id="zde-NL-L8T"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="refresh"/>
+                                <connections>
+                                    <action selector="RefreshButtonClieckWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nlf-gu-OWd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.34509803921568627" green="0.45490196078431372" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ax9-An-kjW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CC1-ca-sd7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FBc-Mz-cDA" secondAttribute="trailing" constant="8" id="FPr-Be-9RR"/>
+                            <constraint firstItem="F9B-zD-ofX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="6" id="I09-VV-KQJ"/>
+                            <constraint firstItem="ax9-An-kjW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="349" id="Jox-Pm-tAd"/>
+                            <constraint firstItem="F9B-zD-ofX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="52" id="aJg-TE-qas"/>
+                            <constraint firstItem="HyL-Cq-0Uh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cge-74-nVu"/>
+                            <constraint firstItem="ax9-An-kjW" firstAttribute="top" secondItem="FBc-Mz-cDA" secondAttribute="bottom" constant="8" id="fLy-bT-2E9"/>
+                            <constraint firstItem="HyL-Cq-0Uh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gxV-VA-K2D"/>
+                            <constraint firstAttribute="trailing" secondItem="HyL-Cq-0Uh" secondAttribute="trailing" constant="12" id="ngI-pB-lpT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="iconImage" destination="F9B-zD-ofX" id="eC3-aP-S0S"/>
+                        <outlet property="mapView" destination="HyL-Cq-0Uh" id="xpI-HF-428"/>
+                        <outlet property="refreshButton" destination="FBc-Mz-cDA" id="OFJ-Dg-tqW"/>
+                        <outlet property="tableView" destination="ax9-An-kjW" id="fo1-0f-JGa"/>
+                        <outlet property="weatherStatus" destination="naP-1d-84m" id="pkv-Ya-ItN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="refresh" width="80" height="80"/>
+    </resources>
+</document>
