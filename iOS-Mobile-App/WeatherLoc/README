@@ -1,4 +1,4 @@
-# WeatherLoc
+WeatherLoc
 
   Summary: This project basically pull data from a weather API and parse data so it can use the data to display 
            the current weather condition. It also store the most 5 recent weather info for the user, then displayed
