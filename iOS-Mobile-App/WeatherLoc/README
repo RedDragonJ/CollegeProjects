@@ -1,0 +1,12 @@
+WeatherLoc
+
+  Summary: This project basically pull data from a weather API and use the data to display the current weather condition.
+    It also store the most 5 recent weather for the user. The project also contains the map to show the current location of 
+    the user by default. User has the option to choose update map and data
+    
+  Version: 1.0
+  
+  iOS Target: 10.0
+    
+  Main technology used: Xcode, CoreData, CoreLocation, UIKit, MapKit, xib
+    
