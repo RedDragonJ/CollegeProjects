@@ -1,0 +1,4 @@
+Here just a quick demenstration of URLSession usage. However, this is not a best way to put the HTTP request code.
+The proper way should create a data modal class to handle all there process and viewcontroller should never
+have access to the URLSession code. Also URLSeesion will automatically execute this request in the background 
+thread so no need to do anything samiliar.
