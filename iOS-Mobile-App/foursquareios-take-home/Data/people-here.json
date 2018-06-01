@@ -1,0 +1,58 @@
+{
+  "venue": {
+    "id": "abc123",
+    "name": "Foursquare HQ",
+    "openTime": 25200,
+    "closeTime": 91800,
+    "visitors": [
+      {
+        "id": "amy",
+        "name": "Amy",
+        "arriveTime": 32400,
+        "leaveTime": 43200
+      },
+      {
+        "id": "jeff",
+        "name": "Jeff",
+        "arriveTime": 28800,
+        "leaveTime": 46800
+      },
+      {
+        "id": "zack",
+        "name": "Zack",
+        "arriveTime": 54000,
+        "leaveTime": 91600
+      },
+      {
+        "id": "nathan",
+        "name": "Nathan",
+        "arriveTime": 61200,
+        "leaveTime": 62100
+      },
+      {
+        "id": "laura",
+        "name": "Laura",
+        "arriveTime": 50400,
+        "leaveTime": 57600
+      },
+      {
+        "id": "emma",
+        "name": "Emma",
+        "arriveTime": 46800,
+        "leaveTime": 52200
+      },
+      {
+        "id": "todd",
+        "name": "Todd",
+        "arriveTime": 28800,
+        "leaveTime": 30600
+      },
+      {
+        "id": "neil",
+        "name": "Neil",
+        "arriveTime": 50400,
+        "leaveTime": 59400
+      }
+    ]
+  }
+}
